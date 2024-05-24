@@ -27,6 +27,8 @@
     "prefer-const": "off",
     "disable-autofix/prefer-const": "warn",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-useless-return": "off",
+    "disable-autofix/no-useless-return": "error",
     "import/extensions": ["error", "ignorePackages"]
   }
 }
