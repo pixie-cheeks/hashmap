@@ -118,8 +118,11 @@ class LinkedList {
 
   removeAt(index) {
     const nodeBeforeRemoval = this.at(index - 1);
-    if (!(nodeBeforeRemoval && nodeBeforeRemoval.nextNode))
-      throw new Error('No node at index');
+    if (!nodeBeforeRemoval) {
+      this.#head = this.#head.nextNode;
+      return;
+    }
+    if (!nodeBeforeRemoval.nextNode) throw new Error('No node at index');
     const nodeAfterRemoval = nodeBeforeRemoval.nextNode.nextNode;
 
     nodeBeforeRemoval.nextNode = nodeAfterRemoval;
