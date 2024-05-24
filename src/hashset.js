@@ -1,6 +1,6 @@
 import LinkedList from './linked-list.js';
 
-class HashMap {
+class HashSet {
   #buckets = [];
   #bucketsLength = 16;
   #loadFactor = 0.75;
@@ -35,12 +35,10 @@ class HashMap {
   }
 
   #rehash() {
-    const currentEntries = this.entries();
+    const currentKeys = this.keys();
     this.clear();
 
-    currentEntries.forEach((entry) => {
-      this.set(entry[0], entry[1]);
-    });
+    currentKeys.forEach((key) => this.set(key));
   }
 
   hash(key) {
@@ -55,37 +53,17 @@ class HashMap {
     return hashCode;
   }
 
-  set(key, value) {
+  set(key) {
     const keyHash = this.hash(key);
     const list = this.#getBucket(keyHash);
     if (!list) {
-      const newList = new LinkedList(key);
-      newList.head().keyValue = value;
-
-      this.#setBucket(keyHash, newList);
+      this.#setBucket(keyHash, new LinkedList(key));
       return;
     }
 
     const keyIndex = list.find(key);
 
-    if (keyIndex !== null) {
-      list.at(keyIndex).keyValue = value;
-    } else {
-      list.append(key);
-      list.tail().keyValue = value;
-    }
-  }
-
-  get(key) {
-    const list = this.#getBucket(this.hash(key));
-
-    if (!list) return null;
-
-    const keyIndex = list.find(key);
-
-    if (keyIndex === null) return null;
-
-    return list.at(keyIndex).keyValue;
+    if (keyIndex === null) list.append(key);
   }
 
   has(key) {
@@ -138,34 +116,6 @@ class HashMap {
 
     return keys;
   }
-
-  values() {
-    const values = [];
-
-    this.#buckets.forEach((bucket) => {
-      let currentNode = bucket.head();
-      while (currentNode) {
-        values.push(currentNode.keyValue);
-        currentNode = currentNode.nextNode;
-      }
-    });
-
-    return values;
-  }
-
-  entries() {
-    const entries = [];
-
-    this.#buckets.forEach((bucket) => {
-      let currentNode = bucket.head();
-      while (currentNode) {
-        entries.push([currentNode.value, currentNode.keyValue]);
-        currentNode = currentNode.nextNode;
-      }
-    });
-
-    return entries;
-  }
 }
 
-export default HashMap;
+export default HashSet;
