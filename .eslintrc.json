@@ -1,0 +1,32 @@
+{
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "plugins": ["disable-autofix", "@stylistic/js"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+
+    "lines-between-class-members": "off",
+    "@stylistic/js/lines-between-class-members": [
+      "error",
+      {
+        "enforce": [
+          { "blankLine": "always", "prev": "*", "next": "method" },
+          { "blankLine": "always", "prev": "method", "next": "*" },
+          { "blankLine": "never", "prev": "field", "next": "field" }
+        ]
+      }
+    ],
+
+    "prefer-const": "off",
+    "disable-autofix/prefer-const": "warn",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "import/extensions": ["error", "ignorePackages"]
+  }
+}
